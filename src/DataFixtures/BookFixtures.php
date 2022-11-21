@@ -17,6 +17,7 @@ class BookFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+        $authors = $this->authorRepository->findAll();
 
         for ($i = 0; $i < 10; $i++) {
             $book = new Book();
@@ -28,9 +29,10 @@ class BookFixtures extends Fixture
             $book->setSummary($faker->paragraph($faker->numberBetween(3, 5)));
             $book->setIsAvailable($faker->boolean(80));
 
-            $authors = $this->authorRepository->findAll();
+            for ($j = 0; $j < $faker->numberBetween(1, 4); $j++) {
+                $book->addAuthor($faker->randomElement($authors));
+            }
 
-            $book->addAuthor($faker->randomElement($authors));
             $manager->persist($book);
         }
 

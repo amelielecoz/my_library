@@ -1,8 +1,12 @@
 <div>
     <h1>Titre : {{ book.title }}</h1>
-    {% if book.authors.first %}
-        <h4>Author : {{ book.authors.first.firstName }} {{ book.authors.first.lastName }}</h4>
-    {% endif %}
+
+    <h4>Author :
+        {% for author in book.authors %}
+            {{ author.firstName }} {{ author.lastName }}{{ not loop.last ? ',' }}
+        {% endfor %}
+    </h4>
+
     <h3>ISBN : {{ book.isbn }}</h3>
     <h3>ISBN 13 : {{ book.isbn-13 }}</h3>
 </div>

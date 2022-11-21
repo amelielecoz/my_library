@@ -13,7 +13,7 @@ class AuthorFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $author = new Author();
 
             $author->setFirstName($faker->firstName());
