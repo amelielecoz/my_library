@@ -3,12 +3,17 @@
 namespace App\DataFixtures;
 
 use App\Entity\Book;
+use App\Repository\AuthorRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
 class BookFixtures extends Fixture
 {
+    public function __construct(private AuthorRepository $authorRepository)
+    {
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -23,6 +28,9 @@ class BookFixtures extends Fixture
             $book->setSummary($faker->paragraph($faker->numberBetween(3, 5)));
             $book->setIsAvailable($faker->boolean(80));
 
+            $authors = $this->authorRepository->findAll();
+
+            $book->addAuthor($faker->randomElement($authors));
             $manager->persist($book);
         }
 
