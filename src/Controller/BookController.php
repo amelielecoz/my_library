@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class BookController extends AbstractController
 {
@@ -23,4 +25,13 @@ class BookController extends AbstractController
             'books' => $books,
         ]);
     }
+
+    #[Route('/book/{id}', name: 'app_book_show')]
+    public function show(Environment $twig, Book $book): Response
+    {
+        return new Response($twig->render('book/show.html.twig', [
+            'book' => $book,
+        ]));
+    }
+
 }

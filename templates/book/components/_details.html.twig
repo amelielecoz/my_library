@@ -1,5 +1,6 @@
 <div>
     <h1>Titre : {{ book.title }}</h1>
+    <a href="{{ path('app_book_show', { id: book.id }) }}">View</a>
 
     <h4>Author :
         {% for author in book.authors %}

@@ -10,7 +10,7 @@
 
 <div class="example-wrapper">
     {% for book in books %}
-        {{ include('book/_details.html.twig', {book: book}) }}
+        {{ include('book/components/_details.html.twig', {book: book}) }}
     {% endfor %}
 </div>
 {% endblock %}
