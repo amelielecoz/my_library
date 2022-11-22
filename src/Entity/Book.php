@@ -7,8 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[UniqueEntity('slug')]
 class Book
 {
     #[ORM\Id]
@@ -36,6 +38,9 @@ class Book
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -161,6 +166,18 @@ class Book
                 $comment->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
