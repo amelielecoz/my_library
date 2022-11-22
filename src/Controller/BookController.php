@@ -26,7 +26,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/book/{id}', name: 'app_book_show')]
+    #[Route('/book/{slug}', name: 'app_book_show')]
     public function show(Environment $twig, Book $book): Response
     {
         return new Response($twig->render('book/show.html.twig', [
