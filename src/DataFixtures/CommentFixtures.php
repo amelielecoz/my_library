@@ -20,16 +20,18 @@ class CommentFixtures extends Fixture
         $books = $this->bookRepository->findAll();
 
         foreach ($books as $book) {
-            $comment = new Comment();
-            $comment->setTitle($faker->sentence($faker->numberBetween(3, 7)));
-            $comment->setText($faker->paragraph(5));
-            $comment->setAuthor($faker->name());
-            $comment->setBook($book);
+            for ($i = 0; $i < $faker->numberBetween(0, 5); $i++) {
+                $comment = new Comment();
+                $comment->setTitle($faker->sentence($faker->numberBetween(3, 7)));
+                $comment->setText($faker->paragraph(5));
+                $comment->setAuthor($faker->name());
+                $comment->setBook($book);
 
-            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($faker->dateTimeBetween('- 1 years'));
-            $comment->setCreatedAt($dateTimeImmutable);
+                $dateTimeImmutable = \DateTimeImmutable::createFromMutable($faker->dateTimeBetween('- 1 years'));
+                $comment->setCreatedAt($dateTimeImmutable);
 
-            $manager->persist($comment);
+                $manager->persist($comment);
+            }
         }
 
         $manager->flush();
