@@ -22,8 +22,8 @@ class CommentFixtures extends Fixture
         foreach ($books as $book) {
             for ($i = 0; $i < $faker->numberBetween(0, 5); $i++) {
                 $comment = new Comment();
-                $comment->setTitle($faker->sentence($faker->numberBetween(3, 7)));
-                $comment->setText($faker->paragraph(5));
+                $comment->setTitle($faker->realText(40));
+                $comment->setText($faker->realText(600));
                 $comment->setAuthor($faker->name());
                 $comment->setBook($book);
 
