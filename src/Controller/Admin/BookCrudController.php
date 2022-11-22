@@ -18,6 +18,7 @@ class BookCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        yield Field::new('slug')->setDisabled();
         yield Field::new('title');
         yield Field::new('isbn');
         yield Field::new('isbn13');
@@ -27,5 +28,4 @@ class BookCrudController extends AbstractCrudController
             ->setFormTypeOption('by_reference', false);
         yield BooleanField::new('isAvailable')->renderAsSwitch();
     }
-
 }
