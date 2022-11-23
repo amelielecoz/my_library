@@ -43,10 +43,14 @@ class Book
     #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: ReservationRequest::class, orphanRemoval: true)]
+    private Collection $reservationRequests;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->reservationRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,5 +197,35 @@ class Book
     public function __toString(): string
     {
         return str_replace(' ', '-', $this->title);
+    }
+
+    /**
+     * @return Collection<int, ReservationRequest>
+     */
+    public function getReservationRequests(): Collection
+    {
+        return $this->reservationRequests;
+    }
+
+    public function addReservationRequest(ReservationRequest $reservationRequest): self
+    {
+        if (!$this->reservationRequests->contains($reservationRequest)) {
+            $this->reservationRequests->add($reservationRequest);
+            $reservationRequest->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservationRequest(ReservationRequest $reservationRequest): self
+    {
+        if ($this->reservationRequests->removeElement($reservationRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($reservationRequest->getBook() === $this) {
+                $reservationRequest->setBook(null);
+            }
+        }
+
+        return $this;
     }
 }
