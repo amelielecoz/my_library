@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Comment;
+use App\Entity\ReservationRequest;
 use App\Form\CommentFormType;
+use App\Form\ReservationRequestFormType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,9 +39,9 @@ class BookController extends AbstractController
     public function show(Request $request, Environment $twig, Book $book): Response
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentFormType::class, $comment);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $commentForm = $this->createForm(CommentFormType::class, $comment);
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $comment->setBook($book);
 
             $this->entityManager->persist($comment);
@@ -48,9 +50,25 @@ class BookController extends AbstractController
             return $this->redirectToRoute('app_book_show', ['slug' => $book->getSlug()]);
         }
 
+        $reservationRequest = new ReservationRequest();
+        $reservationRequestForm = $this->createForm(ReservationRequestFormType::class, $reservationRequest);
+        $reservationRequestForm->handleRequest($request);
+
+        if ($reservationRequestForm->isSubmitted() && $reservationRequestForm->isValid()) {
+            $reservationRequest->setBook($book);
+
+            $this->entityManager->persist($reservationRequest);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_book_show', ['slug' => $book->getSlug()]);
+        }
+
+
+
         return new Response($twig->render('book/show.html.twig', [
             'book' => $book,
-            'comment_form' => $form->createView(),
+            'comment_form' => $commentForm->createView(),
+            'reservation_request_form' => $reservationRequestForm->createView(),
         ]));
     }
 

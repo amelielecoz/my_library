@@ -6,6 +6,7 @@ use App\Repository\ReservationRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRequestRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ReservationRequest
 {
     #[ORM\Id]
@@ -14,6 +15,7 @@ class ReservationRequest
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $requestorName = null;
 
     #[ORM\Column]
@@ -21,6 +23,7 @@ class ReservationRequest
 
     #[ORM\ManyToOne(inversedBy: 'reservationRequests')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Book $book = null;
 
     public function getId(): ?int
@@ -62,5 +65,11 @@ class ReservationRequest
         $this->book = $book;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 }
