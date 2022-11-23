@@ -25,6 +25,7 @@ class CommentFixtures extends Fixture
                 $comment->setTitle($faker->realText(40));
                 $comment->setText($faker->realText(600));
                 $comment->setAuthor($faker->name());
+                $comment->setState('published');
                 $comment->setBook($book);
 
                 $dateTimeImmutable = \DateTimeImmutable::createFromMutable($faker->dateTimeBetween('- 1 years'));

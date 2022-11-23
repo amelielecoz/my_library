@@ -35,6 +35,9 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $book = null;
 
+    #[ORM\Column(length: 255, options: ["default" => "submitted"])]
+    private ?string $state = 'submitted';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,5 +107,17 @@ class Comment
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
+
+        return $this;
     }
 }
