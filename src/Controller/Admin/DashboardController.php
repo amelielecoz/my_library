@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\Comment;
 use App\Entity\ReservationRequest;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Back to the website', 'fa fa-home', 'app_book');
         yield MenuItem::linkToCrud('Books', 'fas fa-book', Book::class);
         yield MenuItem::linkToCrud('Authors', 'fas fa-pen-nib', Author::class);
+        yield MenuItem::linkToCrud('Comments', 'fas fa-pen-nib', Comment::class);
         yield MenuItem::linkToCrud('Reservation Request', 'fas fa-clock', ReservationRequest::class);
     }
 }
