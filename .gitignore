@@ -22,3 +22,4 @@
 ###> PhpStorm files ###
 .idea
 ###> PhpStorm files ###
+/config/secrets/test/test.decrypt.private.php
