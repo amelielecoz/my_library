@@ -8,6 +8,7 @@ use App\Entity\ReservationRequest;
 use App\Form\CommentFormType;
 use App\Form\ReservationRequestFormType;
 use App\Repository\BookRepository;
+use App\SpamChecker;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class BookController extends AbstractController
     }
 
     #[Route('/book/{slug}', name: 'app_book_show')]
-    public function show(Request $request, Environment $twig, Book $book): Response
+    public function show(Request $request, Environment $twig, Book $book, SpamChecker $spamChecker): Response
     {
         $comment = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $comment);
@@ -45,6 +46,16 @@ class BookController extends AbstractController
             $comment->setBook($book);
 
             $this->entityManager->persist($comment);
+
+            $context = [
+                'user_ip' => $request->getClientIp(),
+                'user_agent' => $request->headers->get('user-agent'),
+                'referrer' => $request->headers->get('referer'),
+                'permalink' => $request->getUri(),
+            ];
+
+            if (2 === $spamChecker->getSpamScore($comment, $context)) {
+                throw new \RuntimeException('Blatant spam, go away!');}
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_book_show', ['slug' => $book->getSlug()]);
