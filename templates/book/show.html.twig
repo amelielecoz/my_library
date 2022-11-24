@@ -4,6 +4,20 @@
 
 {% block body %}
     <h2>{{ book.title }}</h2>
+    {% if book.comments|length > 0 %}
+        <div>There are {{ book.comments|length }} comments.</div>
+        {% for comment in book.comments %}
+            <h4>{{ comment.author }}</h4>
+            <small>
+                {{ comment.createdAt|format_datetime('medium', 'short') }}
+            </small>
+
+            <h5>{{ comment.title }}</h5>
+            <p>{{ comment.text }}</p>
+        {% endfor %}
+    {% else %}
+        <div>No comments have been posted yet for this conference.</div>
+    {% endif %}
 
     <h2>Add your own feedback</h2>
 
