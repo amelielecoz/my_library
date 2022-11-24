@@ -5,12 +5,13 @@ namespace App\DataFixtures;
 use App\Entity\Book;
 use App\Repository\AuthorRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class BookFixtures extends Fixture
+class BookFixtures extends Fixture implements FixtureGroupInterface
 {
-    public function __construct(private AuthorRepository $authorRepository)
+    public function __construct(private readonly AuthorRepository $authorRepository)
     {
     }
 
@@ -37,5 +38,10 @@ class BookFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['dev'];
     }
 }
