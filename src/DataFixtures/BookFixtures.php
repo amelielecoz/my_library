@@ -30,7 +30,9 @@ class BookFixtures extends Fixture implements FixtureGroupInterface
             $book->setSummary($faker->paragraph($faker->numberBetween(3, 5)));
             $book->setIsAvailable($faker->boolean(80));
 
-            for ($j = 0; $j < $faker->numberBetween(1, 4); $j++) {
+            $count = $faker->numberBetween(1, 4);
+
+            for ($j = 0; $j < $count; $j++) {
                 $book->addAuthor($faker->randomElement($authors));
             }
 

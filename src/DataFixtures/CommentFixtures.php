@@ -21,7 +21,8 @@ class CommentFixtures extends Fixture implements FixtureGroupInterface
         $books = $this->bookRepository->findAll();
 
         foreach ($books as $book) {
-            for ($i = 0; $i < $faker->numberBetween(0, 5); $i++) {
+            $count = $faker->numberBetween(0, 5);
+            for ($i = 0; $i < $count; $i++) {
                 $comment = new Comment();
                 $comment->setTitle($faker->realText(40));
                 $comment->setText($faker->realText(600));
