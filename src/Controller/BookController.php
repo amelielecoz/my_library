@@ -25,7 +25,7 @@ class BookController extends AbstractController
     {
     }
 
-    #[Route('/book', name: 'app_book')]
+    #[Route('/', name: 'app_book')]
     public function index(): Response
     {
         $books = $this->bookRepository->findAll();

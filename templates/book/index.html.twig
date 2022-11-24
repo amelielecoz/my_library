@@ -9,6 +9,7 @@
 </style>
 
 <div class="example-wrapper">
+    <h2>List of books</h2>
     {% for book in books %}
         {{ include('book/components/_details.html.twig', {book: book}) }}
     {% endfor %}
