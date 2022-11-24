@@ -74,8 +74,6 @@ class BookController extends AbstractController
             return $this->redirectToRoute('app_book_show', ['slug' => $book->getSlug()]);
         }
 
-
-
         return new Response($twig->render('book/show.html.twig', [
             'book' => $book,
             'comment_form' => $commentForm->createView(),
