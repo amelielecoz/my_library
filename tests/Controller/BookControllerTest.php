@@ -15,21 +15,6 @@ class BookControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h2', 'List of books');
     }
 
-    public function testBookPage()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/');
-
-        $this->assertCount(2, $crawler->filter('h1'));
-
-        $client->clickLink('View');
-
-        $this->assertPageTitleContains('My first book');
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h2', 'My first book');
-        $this->assertSelectorExists('div:contains("There are 1 comments")');
-    }
-
     public function testCommentSubmission()
     {
         $client = static::createClient();
@@ -43,5 +28,20 @@ class BookControllerTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertSelectorExists('div:contains("There are 2 comments")');
+    }
+
+    public function testBookPage()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+
+        $this->assertCount(2, $crawler->filter('h1'));
+
+        $client->clickLink('View');
+
+        $this->assertPageTitleContains('My first book');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h2', 'My first book');
+        $this->assertSelectorExists('div:contains("There are 1 comments")');
     }
 }
