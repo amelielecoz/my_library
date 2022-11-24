@@ -29,4 +29,19 @@ class BookControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h2', 'My first book');
         $this->assertSelectorExists('div:contains("There are 1 comments")');
     }
+
+    public function testCommentSubmission()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/book/my-first-book');
+        $client->submitForm('Submit', [
+            'comment_form[author]' => 'Fabien',
+            'comment_form[title]' => 'Some feedback from an automated functional test',
+            'comment_form[text]' => 'Test text',
+            'comment_form[email]' => 'me@automat.ed',
+        ]);
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertSelectorExists('div:contains("There are 2 comments")');
+    }
 }

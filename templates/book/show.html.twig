@@ -5,7 +5,7 @@
 {% block body %}
     <h2>{{ book.title }}</h2>
     {% if book.comments|length > 0 %}
-        <div>There are {{ book.comments|length }} comments.</div>
+        <div>There are {{ book.comments|length }} comments</div>
         {% for comment in book.comments %}
             <h4>{{ comment.author }}</h4>
             <small>

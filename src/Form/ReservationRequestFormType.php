@@ -16,7 +16,9 @@ class ReservationRequestFormType extends AbstractType
             ->add('requestorName', null, [
                 'label' => 'Your name'
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Ask for a reservation'
+            ])
         ;
     }
 

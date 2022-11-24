@@ -80,5 +80,4 @@ class BookController extends AbstractController
             'reservation_request_form' => $reservationRequestForm->createView(),
         ]));
     }
-
 }
