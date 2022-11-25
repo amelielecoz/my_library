@@ -40,6 +40,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
         $comment1->setEmail('amelie@example.com');
         $comment1->setTitle('This was a great conference.');
         $comment1->setText($faker->paragraph($faker->numberBetween(3, 5)));
+        $comment1->setState('published');
         $manager->persist($comment1);
 
         $manager->flush();
