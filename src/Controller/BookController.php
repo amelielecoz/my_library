@@ -7,6 +7,7 @@ use App\Entity\Comment;
 use App\Entity\ReservationRequest;
 use App\Form\CommentFormType;
 use App\Form\ReservationRequestFormType;
+use App\Message\CommentMessage;
 use App\Repository\BookRepository;
 use App\Repository\CommentRepository;
 use App\SpamChecker;
@@ -14,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
@@ -23,7 +25,8 @@ class BookController extends AbstractController
         private readonly BookRepository         $bookRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly Environment            $twig,
-        private readonly CommentRepository      $commentRepository
+        private readonly CommentRepository      $commentRepository,
+        private MessageBusInterface $bus,
     )
     {
     }
@@ -43,7 +46,6 @@ class BookController extends AbstractController
     public function show(
         Request $request,
         Book $book,
-        SpamChecker $spamChecker,
     ): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
@@ -56,6 +58,7 @@ class BookController extends AbstractController
             $comment->setBook($book);
 
             $this->entityManager->persist($comment);
+            $this->entityManager->flush();
 
             $context = [
                 'user_ip' => $request->getClientIp(),
@@ -64,9 +67,7 @@ class BookController extends AbstractController
                 'permalink' => $request->getUri(),
             ];
 
-            if (2 === $spamChecker->getSpamScore($comment, $context)) {
-                throw new \RuntimeException('Blatant spam, go away!');}
-            $this->entityManager->flush();
+            $this->bus->dispatch(new CommentMessage($comment->getId(), $context));
 
             return $this->redirectToRoute('app_book_show', ['slug' => $book->getSlug()]);
         }
