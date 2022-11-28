@@ -36,10 +36,13 @@ class BookController extends AbstractController
     {
         $books = $this->bookRepository->findAll();
 
-        return new Response($this->twig->render('book/index.html.twig', [
+        $response = new Response($this->twig->render('book/index.html.twig', [
             'controller_name' => 'BookController',
             'books' => $books,
         ]));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
     }
 
     #[Route('/book/{slug}', name: 'app_book_show')]
