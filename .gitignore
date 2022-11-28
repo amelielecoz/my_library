@@ -14,12 +14,8 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
-
 ###> PhpStorm files ###
 .idea
 ###> PhpStorm files ###
 /config/secrets/test/test.decrypt.private.php
+/public/uploads/

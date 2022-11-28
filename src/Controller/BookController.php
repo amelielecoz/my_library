@@ -13,6 +13,7 @@ use App\Repository\CommentRepository;
 use App\SpamChecker;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -60,6 +61,7 @@ class BookController extends AbstractController
     public function show(
         Request $request,
         Book $book,
+        string $photoDir,
     ): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
@@ -70,6 +72,13 @@ class BookController extends AbstractController
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $comment->setBook($book);
+            if ($photo = $commentForm['photo']->getData()) {
+                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                try {
+                    $photo->move($photoDir, $filename);
+                } catch (FileException $e) {
+                    // unable to upload the photo, give up
+                }$comment->setPhotoFilename($filename);}
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
