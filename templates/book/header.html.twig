@@ -1,0 +1,5 @@
+<ul>
+    {% for book in books %}
+        <li><a href="{{ path('app_book_show', { slug: book.slug }) }}">{{ book }}</a></li>
+    {% endfor %}
+</ul>
