@@ -46,6 +46,12 @@ class Book
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: ReservationRequest::class, orphanRemoval: true)]
     private Collection $reservationRequests;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $publisher = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageUrl = null;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
@@ -225,6 +231,30 @@ class Book
                 $reservationRequest->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublisher(): ?string
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(?string $publisher): self
+    {
+        $this->publisher = $publisher;
+
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(?string $imageUrl): self
+    {
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }

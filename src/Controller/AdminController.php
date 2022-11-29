@@ -105,6 +105,8 @@ class AdminController extends AbstractController
             $book->setIsbn13($data['isbn13']);
             $book->setIsbn($data['isbn']);
             $book->setIsAvailable(true);
+            $book->setImageUrl($data['image']);
+            $book->setPublisher($data['publisher']);
 
             foreach ($data['authors'] as $authorNames) {
                 if (str_contains($authorNames, ',')) {

@@ -4,11 +4,20 @@
 
 {% block body %}
     <h2 class="mb-5">
-        {{ book }} Book
+        {{ book.title }}
     </h2>
 
     <div class="row">
         <div class="col-12 col-lg-8">
+            <div class="mb-5">
+                <h5 class="mb-2">
+                    {{ book.publisher }}
+                </h5>
+                {% if book.imageUrl %}
+                    <img src="{{ book.imageUrl }}" />
+                {% endif %}
+            </div>
+
             {% if comments|length > 0 %}
                 {% for comment in comments %}
                     <div class="media shadow border rounded-3 p-3 mb-4">
@@ -45,7 +54,7 @@
                     <a href="{{ path('app_book', { slug: book.slug, offset: next }) }}">Next</a>
                 {% endif %}
             {% else %}
-                <div class="text-center">
+                <div class="text-center mb-5">
                     No comments have been posted yet for this book.
                 </div>
             {% endif %}
