@@ -18,11 +18,11 @@ class BookCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield Field::new('slug');
+        yield Field::new('slug')->onlyOnForms();
         yield Field::new('title');
         yield Field::new('isbn');
         yield Field::new('isbn13');
-        yield TextareaField::new('summary');
+        yield TextareaField::new('summary')->onlyOnForms();
         yield AssociationField::new('authors')
             ->autocomplete()
             ->setFormTypeOption('by_reference', false);
