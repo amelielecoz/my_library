@@ -22,7 +22,6 @@ class CommentCrudController extends AbstractCrudController
     {
         yield AssociationField::new('book');
         yield TextField::new('author');
-        yield TextField::new('title');
         yield TextareaField::new('text')->hideOnIndex();
         yield TextField::new('state');
         yield ImageField::new('photoFilename')

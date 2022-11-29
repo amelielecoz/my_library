@@ -16,10 +16,6 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    private ?string $title = null;
-
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     private ?string $text = null;

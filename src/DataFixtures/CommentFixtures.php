@@ -24,7 +24,6 @@ class CommentFixtures extends Fixture implements FixtureGroupInterface
             $count = $faker->numberBetween(0, 5);
             for ($i = 0; $i < $count; $i++) {
                 $comment = new Comment();
-                $comment->setTitle($faker->realText(40));
                 $comment->setText($faker->realText(600));
                 $comment->setAuthor($faker->name());
                 $comment->setEmail($faker->email());
