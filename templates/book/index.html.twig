@@ -4,7 +4,7 @@
 
 {% block body %}
     <h2 class="mb-5">
-        Give your feedback! test
+        Give your feedback!
     </h2>
 
     {% for row in books|batch(4) %}
@@ -15,14 +15,16 @@
                         <div class="card-body">
                             <div class="card-title">
                                 <h4 class="font-weight-light">
-                                    {{ book }}
+                                    {{ book.title }}
                                 </h4>
+
                             </div>
+                            {% if book.imageUrl %}
+                                <img class="card-img-top" src="{{ book.imageUrl }}" size="50"/>
+                            {% endif %}
 
                             <a href="{{ path('app_book_show', { slug: book.slug }) }}"
-                               class="btn btn-sm btn-primary stretched-link">
-                                View
-                            </a>
+                               class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
