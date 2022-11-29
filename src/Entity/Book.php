@@ -34,7 +34,7 @@ class Book
     #[ORM\Column]
     private ?bool $isAvailable = null;
 
-    #[ORM\ManyToMany(targetEntity: Author::class, mappedBy: 'books')]
+    #[ORM\ManyToMany(targetEntity: Author::class, mappedBy: 'books', cascade: ['persist'])]
     private Collection $authors;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Comment::class, orphanRemoval: true)]

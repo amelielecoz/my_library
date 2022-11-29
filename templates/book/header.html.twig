@@ -1,5 +1,5 @@
 {% for book in books %}
         <a class="nav-book" href="{{ path('app_book_show', { slug: book.slug }) }}">
-                {{ book }}
+                {{ book.title }}
         </a>
 {% endfor %}

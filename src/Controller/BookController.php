@@ -45,13 +45,9 @@ class BookController extends AbstractController
     #[Route('/book_header', name: 'book_header')]
     public function bookHeader(BookRepository $bookRepository): Response
     {
-        $response = new Response($this->twig->render('book/header.html.twig', [
+        return new Response($this->twig->render('book/header.html.twig', [
             'books' => $bookRepository->findAll(),
         ]));
-
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 
     #[Route('/book/{slug}', name: 'app_book_show')]

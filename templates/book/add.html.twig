@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add a book{% endblock %}
+
+{% block body %}
+    <h2 class="mb-5">
+        Add a book
+    </h2>
+    {# read and display all flash messages #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {{ form(isbn_form) }}
+{% endblock %}
