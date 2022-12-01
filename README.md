@@ -1,7 +1,7 @@
 # My Library
 An app to make available all the books I have in my personal library
 
-#### Video Demo: <URL_HERE>
+#### Video Demo: https://www.loom.com/share/d5e09d6543044d3b98e68e78f3d5b35c
 
 #### Description:
 
