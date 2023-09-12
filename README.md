@@ -1,8 +1,6 @@
 # My Library
 An app to make available all the books I have in my personal library
 
-#### Video Demo: https://www.loom.com/share/d5e09d6543044d3b98e68e78f3d5b35c
-
 #### Description:
 
 This project aims to create a website to share all the books I have in my library.
